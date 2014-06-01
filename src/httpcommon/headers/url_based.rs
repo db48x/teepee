@@ -55,7 +55,7 @@ impl Header for Host {
 }
 
 /// The data type for urls that may be relative
-#[deriving(Clone, Eq, Show)]
+#[deriving(Clone, Show)]
 pub enum PossiblyRelativeUrl {
     /// an absolute url
     Absolute(Url),

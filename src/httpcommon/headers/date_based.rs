@@ -45,7 +45,7 @@ impl Header for uint {
 }
 
 /// The data type for the ``expires`` header.
-#[deriving(Clone, Eq, Show)]
+#[deriving(Clone, PartialEq, Show)]
 pub enum Expires {
     /// The Expires header had an invalid format, which MUST be interpreted as “in the past”.
     Past,
@@ -105,7 +105,7 @@ impl Header for Tm {
 }
 
 /// The data type for the ``Retry-After`` header.
-#[deriving(Clone, Eq, Show)]
+#[deriving(Clone, PartialEq, Show)]
 pub enum RetryAfter {
     /// A valid Retry-After header date.
     DateRA(Tm),
@@ -140,7 +140,7 @@ mod tests {
     use super::*;
     use super::super::{Header, Headers, fmt_header};
 
-    fn expect<H: Header + std::fmt::Show + Eq>(h: Option<H>, h_expected: H, raw: &[u8]) {
+    fn expect<H: Header + std::fmt::Show + PartialEq>(h: Option<H>, h_expected: H, raw: &[u8]) {
         let h = h.unwrap();
         assert_eq!(fmt_header(&h).as_slice(), raw);
         assert_eq!(h, h_expected);
