@@ -1,6 +1,7 @@
 RUSTC ?= rustc
 RUSTDOC ?= rustdoc
-RUSTFLAGS ?= -O
+RUSTFLAGS ?= -O -L ../rust-encoding -L ../rust-url
+RUSTDOCFLAGS ?= -L ../rust-encoding -L ../rust-url
 RUST_REPOSITORY ?= ../../rust
 RUST_CTAGS ?= $(RUST_REPOSITORY)/src/etc/ctags.rust
 
@@ -64,7 +65,7 @@ $$(LIB_$(1)): $$(SRC_$(1)) $$(DEP_LIB_$(1))
 $(1)-docs: doc/$(1)/index.html
 
 doc/$(1)/index.html: $$(SRC_$(1)) $$(DEP_LIB_$(1))
-	$$(RUSTDOC) src/$(1)/lib.rs -L build
+	$$(RUSTDOC) src/$(1)/lib.rs -L build $$(RUSTDOCFLAGS)
 
 build/$(1)-test: $$(SRC_$(1)) $$(DEP_LIB_$(1))
 	$$(RUSTC) $$(RUSTFLAGS) --test -o build/$(1)-test src/$(1)/lib.rs -L build
@@ -76,7 +77,7 @@ $(1)-test: $(1) $(1)-doctest build/$(1)-test
 	build/$(1)-test --test
 
 $(1)-doctest: $$(SRC_$(1)) $$(LIB_$(1)) $$(DEP_LIB_$(1))
-	$$(RUSTDOC) -L build --test src/$(1)/lib.rs
+	$$(RUSTDOC) src/$(1)/lib.rs --test -L build $$(RUSTDOCFLAGS)
 
 # Can't wait for everything to build, optimised too? OK, you can save some time here.
 $(1)-quicktest: build/$(1)-quicktest

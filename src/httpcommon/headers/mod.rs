@@ -47,6 +47,7 @@ macro_rules! header {
 }
 
 pub mod date_based;
+pub mod url_based;
 mod internals;
 
 /// The data type of an HTTP header for encoding and decoding.
